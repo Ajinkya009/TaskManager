@@ -18,16 +18,7 @@ module.exports = function(app){
 	app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 	app.use(bodyParser.json({limit: '50mb'}));
     app.use(cookieParser());
-    if(process.env.NODE_ENV!="ci"){
-        const client = redis.createClient(keys.redisUrl);
-        app.use(session({
-            secret: 'RANDOMSECRETHERE',
-            // create new redis store.
-            store: new redisStore({ host: 'redis', port: 6379, client: client, ttl:5}),
-            saveUninitialized: false,
-            resave: false
-        }));
-    }
+    
 	
 	app.use(cors());
 }
