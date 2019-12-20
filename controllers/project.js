@@ -108,7 +108,7 @@ class ProjectController{
             const token = req.header('Authorization').replace('Bearer ', '');
             const decoded = jwt.verify(token,keys.secretKey);
             if(decoded!=null){
-               const projectData = await Project.findByIdAndUpdate(req.body.id,{$set:{description:req.body.description,duration:req.body.duration,name:req.body.name}}).populate({path:'admin',select:{'name':1,_id:0}});
+               const projectData = await Project.findByIdAndUpdate(req.body.id,{$set:{description:req.body.description,duration:req.body.duration,name:req.body.name}},{new:true}).populate({path:'admin',select:{'name':1,_id:0}});
                res.status(200).json({"body":{projectData:projectData},"error":null});
             }
             else{

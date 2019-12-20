@@ -51,6 +51,7 @@ class TaskController{
             const token = req.header('Authorization').replace('Bearer ', '');
             const decoded = jwt.verify(token,keys.secretKey);
             if(decoded!=null){
+                console.log("here");
                const taskData = await (Task.findById(req.params.taskId)).populate([
                    {path:'admin',select:{'name':1,_id:0}},
                    {path:'assignee',select:{'name':1,_id:0}}
@@ -77,8 +78,9 @@ class TaskController{
          try{
             const token = req.header('Authorization').replace('Bearer ', '');
             const decoded = jwt.verify(token,keys.secretKey);
+            console.log(decoded);
             if(decoded!=null){
-                console.log(req.body);
+                
                 const {name,description,status,startDate,endDate} = req.body;
                const data = await Task.findByIdAndUpdate(req.body._id,{$set:
                 {   
